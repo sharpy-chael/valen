@@ -29,17 +29,19 @@ function handleNoClick() {
 
     noButton.textContent = messages[messageIndex];
     messageIndex = (messageIndex + 1) % messages.length;
+    if (!originalYesSize) {
+        originalYesSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+    }
 
-   if (!originalYesSize) {
-    originalYesSize = window.getComputedStyle(yesButton).fontSize;
-    }const currentSize = parseFloat(
-        window.getComputedStyle(yesButton).fontSize
-    );
-    yesButton.style.fontSize = `${currentSize * 1.5}px`;
+    const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+    const maxSize = originalYesSize * 3;
+    const newSize = Math.min(currentSize * 1.5, maxSize);
+    yesButton.style.fontSize = `${newSize}px`;
 
     gif.src = gifs[gifIndex];
     gifIndex = (gifIndex + 1) % gifs.length;
 }
+
 function handleYesClick() {
     const gif = document.getElementById('valentineGif');
     const title = document.querySelector('h1');
