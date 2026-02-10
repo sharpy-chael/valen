@@ -44,9 +44,12 @@ function handleYesClick() {
     const gif = document.getElementById('valentineGif');
     const title = document.querySelector('h1');
     const yesButton = document.querySelector('.yes-button');
+    const noButton = document.querySelector('.no-button');
     title.textContent = "Yayyy!! 💖 Happy Valentine’s Day!";
    
     gif.src = happyGif;
+    yesButton.style.display = "none";
+    noButton.style.display = "none";
     gifIndex = 0;
     messageIndex = 0;
     if (originalYesSize) {
