@@ -21,6 +21,7 @@ const gifs = [
 let originalYesSize = null;
 let messageIndex = 0;
 let gifIndex = 0;
+let noClickCount = 0;
 
 function handleNoClick() {
     const noButton = document.querySelector('.no-button');
@@ -29,14 +30,19 @@ function handleNoClick() {
 
     noButton.textContent = messages[messageIndex];
     messageIndex = (messageIndex + 1) % messages.length;
+
     if (!originalYesSize) {
         originalYesSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
     }
 
-    const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
-    const maxSize = originalYesSize * 3;
-    const newSize = Math.min(currentSize * 1.5, maxSize);
-    yesButton.style.fontSize = `${newSize}px`;
+    if (noClickCount < 4) {
+        const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+        const maxSize = originalYesSize * 3;
+        const newSize = Math.min(currentSize * 1.5, maxSize);
+        yesButton.style.fontSize = `${newSize}px`;
+    }
+
+    noClickCount++; 
 
     gif.src = gifs[gifIndex];
     gifIndex = (gifIndex + 1) % gifs.length;
@@ -47,15 +53,18 @@ function handleYesClick() {
     const title = document.querySelector('h1');
     const yesButton = document.querySelector('.yes-button');
     const noButton = document.querySelector('.no-button');
+
     title.textContent = "Yayyy!! 💖 Happy Valentine’s Day!";
    
     gif.src = happyGif;
     yesButton.style.display = "none";
     noButton.style.display = "none";
+
     gifIndex = 0;
     messageIndex = 0;
+    noClickCount = 0;
+
     if (originalYesSize) {
         yesButton.style.fontSize = originalYesSize;
     }
 }
-
